@@ -1,0 +1,9 @@
+package eg.edu.alexu.csd.datastructure.stack.cs_73_;
+
+public interface IStack {
+public Object pop(Object arr[],int top);
+public Object peek(Object arr[],int top);
+public void push(Object element,Object arr[],int top);
+public boolean isEmpty(int top);
+public int size(int top);
+}
