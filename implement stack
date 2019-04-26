@@ -1,0 +1,99 @@
+package eg.edu.alexu.csd.datastructure.stack.cs_73_;
+
+import java.util.*;
+
+public class myClass implements IStack{
+
+	public Object pop(Object arr[],int top) {
+		Object temb=arr[top];
+		top--;
+		return temb;
+	}
+	public Object peek(Object arr[],int top) {
+		return arr[top];
+	}
+	public void push(Object element,Object arr[],int top) {
+		top+=1;
+		arr[top]=element;
+	}
+	public boolean isEmpty(int top) {
+		return(top==-1);
+	}
+	public int size(int top) {
+		int size=top+1;
+		return size;
+	}
+  
+  /*main /////////*/
+	public static void main(String []args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.print("Enter max size:");
+		
+		int size=sc.nextInt();
+		Object stack[]=new Object[size];
+		int ch;
+		int top=-1;
+		Object element;
+		myClass t=new myClass();
+		
+		while(true) {
+			System.out.println("1.push");
+			System.out.println("2.pop");
+			System.out.println("3.peek");
+			System.out.println("4.isEmpty");
+			System.out.println("5.size");
+			System.out.println("6.Exit");
+			System.out.print("Enter your choice:");
+			ch=sc.nextInt();
+			switch(ch) {
+			case 1:    /*push an element*/
+				if(top>=size) {
+					throw new StackOverflowError("Stack is full");
+				}
+				else {
+				System.out.println("Enter the element");
+				element=sc.nextInt();
+				t.push(element,stack,top);
+				top++;}
+				break;
+			case 2:  /*remove an element*/
+				if(top==-1) {
+					throw new EmptyStackException();
+				}
+				else {
+				Object result=t.pop(stack,top);
+				top--;
+				System.out.println(result);
+				}
+				break;
+			case 3:    /*return last_in element*/
+				Object result=t.peek(stack,top);
+				System.out.println(result);
+				break;
+				
+			case 4:
+				boolean n=t.isEmpty(top);
+				System.out.println(n);
+				break;
+			case 5:
+				int m=t.size(top);
+				System.out.println(m);
+				break;
+			case 6:
+				System.exit(1);
+				break;
+				default:
+					System.out.println("Not valid choice");
+			}
+			System.out.println("------------------------------------------------------------------");
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+}
