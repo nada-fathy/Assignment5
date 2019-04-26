@@ -1,0 +1,154 @@
+package eg.edu.alexu.csd.datastructure.stack.cs_73_;
+
+public class converter implements IExpressionEvaluator {
+
+	public String infixToPostfix(String expression) {
+		String s=new String();
+		int l=expression.length();
+		int top=-1;
+		myClass t=new myClass();
+		Object[] s2=new Object[l];
+		for(int i=0;i<l;i++) {
+			if((expression.charAt(i))!='+' &&( expression.charAt(i))!='-' &&( expression.charAt(i))!='*' &&(expression.charAt(i))!='/' &&(expression.charAt(i))!='(' && (expression.charAt(i))!=')'){
+				s=s+expression.charAt(i);
+			}
+			
+			else {
+				if(top==-1) {
+					t.push(expression.charAt(i),s2, top);
+					top++;
+				}
+				else if(((s2[top].toString().charAt(0))=='+' ||(s2[top].toString().charAt(0))=='-')&&(( expression.charAt(i))=='+'  || ( expression.charAt(i))=='-')){
+					Object c=t.pop(s2, top);
+					top--;
+					t.push(expression.charAt(i), s2, top);
+					top++;
+					s=s+c;
+				}
+				
+				
+				else if(((s2[top].toString().charAt(0))=='+' ||(s2[top].toString().charAt(0))=='-')&&(( expression.charAt(i))=='*'  || ( expression.charAt(i))=='/')){
+					t.push(expression.charAt(i), s2, top);
+					top++;
+				}
+				
+				
+				else if(((s2[top].toString().charAt(0))=='*' ||(s2[top].toString().charAt(0))=='/')&&(( expression.charAt(i))=='+'  || ( expression.charAt(i))=='-')){
+					Object c=t.pop(s2, top);
+					top--;
+					t.push(expression.charAt(i), s2, top);
+					top++;
+					s=s+c;
+				}
+				
+				else if(((s2[top].toString().charAt(0))=='*' ||(s2[top].toString().charAt(0))=='/')&&(( expression.charAt(i))=='*'  || ( expression.charAt(i))=='/')){
+					Object c=t.pop(s2, top);
+					top--;
+					t.push(expression.charAt(i), s2, top);
+					top++;
+					s=s+c;
+				}
+				
+				else if((expression.charAt(i))=='(' || (expression.charAt(i))=='{') {
+					t.push(expression.charAt(i), s2, top);
+					top++;
+					
+				}
+				else if((expression.charAt(i))==')' || (expression.charAt(i))=='}') {
+					while((s2[top].toString().charAt(0))!='(' && (s2[top].toString().charAt(0))!='{') {
+						Object c=t.pop(s2, top);
+						top--;
+						s=s+c;
+					}
+					top--;
+				}
+				
+				else {
+					t.push(expression.charAt(i), s2, top);
+					top++;
+				}
+				
+			}
+			
+			
+		}
+		
+		while(top!=-1) {
+			Object c=s2[top];
+			top--;
+			s=s+c;
+		}
+		
+		
+		return s;
+	}
+	
+	//////
+	//////
+	//////////
+	
+	public int evaluate(String expression) {
+		float result;
+		int l=expression.length();
+		Object[]arr=new Object[l];
+		int top=-1;
+		myClass t=new myClass();
+		for(int i=0;i<l;i++) {
+			if((expression.charAt(i))!='+' &&( expression.charAt(i))!='-' &&( expression.charAt(i))!='*' &&(expression.charAt(i))!='/') {
+				t.push(expression.charAt(i), arr, top);
+				top++;
+			}
+			else {
+				if(expression.charAt(i)=='+') {
+					int a2=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+					int a1=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+					
+					result=a1+a2;
+					t.push((Object)result, arr, top);
+					top++;
+				}
+				if(expression.charAt(i)=='-') {
+					int a2=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+					int a1=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+					
+					result=a1-a2;
+					t.push((Object)result, arr, top);
+					top++;
+				}
+				
+				if(expression.charAt(i)=='*') {
+					int a2=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+					int a1=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+					
+					result=a1*a2;
+					t.push((Object)result, arr, top);
+					top++;
+				}
+				
+				if(expression.charAt(i)=='/') {
+					int a2=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+							
+					int a1=(t.pop(arr, top).toString().charAt(0))-'0';
+							top--;
+					
+					result=a1/a2;
+					t.push((Object)result, arr, top);
+					top++;
+				}
+				
+				
+			}
+		}
+		int n=( arr[top].toString().charAt(0))-'0';
+		return n;
+		
+	}
+	
+}
